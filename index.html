@@ -1,0 +1,927 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>한반도 전쟁 위험 지표</title>
+<meta name="description" content="공개 보도를 바탕으로 한반도 전쟁 위험 신호를 정리한 참고 지표와 비상시 행동 요령. 공식 경보가 아닙니다.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="한반도 전쟁 위험 지표">
+<meta property="og:description" content="공개 보도를 바탕으로 한반도 전쟁 위험 신호를 정리한 참고 지표와 비상시 행동 요령. 공식 경보가 아닙니다.">
+<meta property="og:url" content="https://stvzn123-ctrl.github.io/war-risk-monitor/">
+<meta property="og:image" content="https://stvzn123-ctrl.github.io/war-risk-monitor/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="한반도 전쟁 위험 지표">
+<meta name="twitter:description" content="공개 보도를 바탕으로 한반도 전쟁 위험 신호를 정리한 참고 지표와 비상시 행동 요령. 공식 경보가 아닙니다.">
+<meta name="twitter:image" content="https://stvzn123-ctrl.github.io/war-risk-monitor/og.png">
+<link rel="canonical" href="https://stvzn123-ctrl.github.io/war-risk-monitor/">
+<script>
+  (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, "clarity", "script", "z4lttjlfl9");
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400&display=swap">
+<style>
+  :root {
+    color-scheme: dark;
+    --font-anthropic-sans: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", system-ui, -apple-system, sans-serif;
+    --font-anthropic-serif: "Noto Serif KR", "AppleMyungjo", Georgia, serif;
+    --cds-radius: 8px; --cds-font-size-body: 15px; --cds-dur-slow: 0.3s;
+    --page-bg: #040b16;
+  }
+  html, body { background: var(--page-bg); }
+  body { margin: 0; }
+</style>
+<style>
+  /* Layout: full-bleed dark "monitor" hero (radar gauge + side readouts over a live network field), then a long-read analysis column below. Single deliberate dark look. */
+  .wr {
+    --wr-bg: #040b16; --wr-bg2: #08182b; --wr-panel: rgba(10, 32, 56, 0.55); --wr-line: rgba(79, 216, 255, 0.18);
+    --wr-cyan: #4fd8ff; --wr-cyan-dim: rgba(79, 216, 255, 0.35); --wr-fg: #e6f4ff; --wr-muted: #8fa9c4;
+    --wr-ok: #3ee6c1; --wr-warn: #ffc857; --wr-bad: #ff5470; --wr-none: #6b7f99;
+    --wr-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+    color-scheme: dark; background: var(--wr-bg); color: var(--wr-fg); font-family: var(--font-anthropic-sans);
+    overflow: hidden; word-break: keep-all; overflow-wrap: break-word;
+  }
+  .wr-pad { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .wr-in { max-width: 1120px; margin-inline: auto; }
+
+  /* hero */
+  .wr-hero { position: relative; overflow: hidden; padding-block: 40px 28px;
+    background: radial-gradient(60% 70% at 72% 38%, rgba(40, 150, 230, 0.28), transparent 70%), radial-gradient(50% 60% at 10% 90%, rgba(20, 90, 170, 0.25), transparent 70%), linear-gradient(180deg, var(--wr-bg2), var(--wr-bg)); }
+  .wr-net { position: absolute; inset: 0; pointer-events: none; opacity: 0.85; }
+  .wr-net canvas { display: block; }
+  .wr-hero .wr-in { position: relative; display: grid; gap: 22px; }
+  .wr-eyebrow { font-family: var(--wr-mono); font-size: 11px; letter-spacing: 0.22em; color: var(--wr-cyan); }
+  .wr h1 { margin: 6px 0 0; font-weight: 400; font-family: var(--font-anthropic-serif); font-size: clamp(1.8rem, 4vw, 2.6rem); text-wrap: balance; text-shadow: 0 0 24px rgba(79, 216, 255, 0.35); }
+  .wr-take { margin: 10px 0 0; max-width: 62ch; color: var(--wr-muted); line-height: 1.6; font-size: var(--cds-font-size-body); }
+  .wr .wr-take b { color: var(--wr-fg); font-weight: 600; }
+  .wr-hero-grid { display: grid; gap: 22px; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: center; }
+  @media (max-width: 760px) { .wr-hero-grid { grid-template-columns: minmax(0, 1fr); } }
+
+  .wr-radar { position: relative; width: min(100%, 400px); aspect-ratio: 1; margin-inline: auto; max-width: 100%; }
+  @media (max-width: 760px) { .wr-radar { width: min(100%, 320px); } }
+  .wr-ring { position: absolute; inset: 0; }
+  .wr-ring svg { display: block; width: 100%; height: 100%; overflow: visible; }
+  .wr-sweep { display: none; position: absolute; inset: 9%; border-radius: 50%; pointer-events: none;
+    background: conic-gradient(from 0deg, rgba(79, 216, 255, 0.22), rgba(79, 216, 255, 0) 70deg, transparent 360deg); }
+  @media (prefers-reduced-motion: no-preference) { .wr-sweep { display: block; animation: wr-spin 7s linear infinite; } }
+  @keyframes wr-spin { to { transform: rotate(360deg); } }
+  .wr-center { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; gap: 4px; pointer-events: none; }
+  .wr-cap { font-family: var(--wr-mono); font-size: 11px; letter-spacing: 0.2em; color: var(--wr-muted); }
+  .wr-score { font-family: var(--font-anthropic-sans); font-weight: 300; font-size: clamp(3.6rem, 11vw, 5.4rem); line-height: 1; font-variant-numeric: tabular-nums; color: var(--wr-fg); text-shadow: 0 0 22px rgba(79, 216, 255, 0.6); }
+  .wr-score small { font-size: 0.28em; color: var(--wr-muted); text-shadow: none; margin-left: 2px; }
+  .wr-pill { justify-self: center; font-size: 13px; padding: 3px 14px; border-radius: 999px; border: 1px solid currentColor; background: rgba(4, 11, 22, 0.6); }
+
+  .wr-side { display: grid; gap: 12px; min-width: 0; }
+  .wr-panel { background: var(--wr-panel); border: 1px solid var(--wr-line); border-radius: var(--cds-radius); padding: 14px 16px; backdrop-filter: blur(6px); min-width: 0; }
+  .wr-fc { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 14px; align-items: center; }
+  .wr-mini { width: 76px; height: 76px; }
+  .wr-mini svg { display: block; width: 100%; height: 100%; }
+  .wr-fc-num { font-weight: 300; font-size: 2rem; line-height: 1; font-variant-numeric: tabular-nums; }
+  .wr-fc-num small { font-size: 0.5em; color: var(--wr-muted); }
+  .wr-fc-label { font-size: 13px; margin-top: 4px; }
+  .wr-fc-date { font-family: var(--wr-mono); font-size: 11px; color: var(--wr-muted); margin-top: 2px; }
+  .wr-ptitle { font-family: var(--wr-mono); font-size: 11px; letter-spacing: 0.16em; color: var(--wr-muted); margin-bottom: 10px; }
+  .wr-cats { display: grid; gap: 10px; position: relative; min-height: 84px; }
+  .wr-cat-row { display: grid; grid-template-columns: 5rem minmax(0, 1fr) 2rem; gap: 10px; align-items: center; font-size: 13px; }
+  .wr-segs { display: grid; grid-template-columns: repeat(20, 1fr); gap: 2px; height: 12px; }
+  .wr-seg { border-radius: 1px; background: rgba(79, 216, 255, 0.1); }
+  .wr-cat-val { text-align: right; font-family: var(--wr-mono); font-variant-numeric: tabular-nums; }
+  .wr-tip { position: absolute; pointer-events: none; background: #0b1f36; border: 1px solid var(--wr-cyan-dim); border-radius: var(--cds-radius); padding: 4px 8px; font-size: 12px; white-space: nowrap; z-index: 3; color: var(--wr-fg); }
+
+  .wr-hero-foot { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; justify-content: space-between; font-family: var(--wr-mono); font-size: 11px; color: var(--wr-muted); }
+  .wr-down { font: inherit; font-size: 13px; color: var(--wr-cyan); background: rgba(79, 216, 255, 0.08); border: 1px solid var(--wr-cyan-dim); border-radius: 999px; padding: 6px 16px; cursor: pointer; }
+  .wr-top { display: flex; justify-content: flex-end; align-items: center; gap: 12px; }
+  .wr-share-btn { flex: none; font: inherit; font-size: 13px; color: var(--wr-cyan); background: rgba(79, 216, 255, 0.08); border: 1px solid var(--wr-cyan-dim); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+  .wr-share-btn:hover, .wr-share-btn[aria-expanded="true"] { background: rgba(79, 216, 255, 0.18); }
+  .wr-share { display: grid; gap: 10px; background: var(--wr-panel); border: 1px solid var(--wr-line); border-radius: var(--cds-radius); padding: 14px 16px; backdrop-filter: blur(6px); }
+  .wr-share[hidden] { display: none; }
+  .wr-share-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .wr-sh { font: inherit; font-size: 13px; color: var(--wr-fg); background: rgba(230, 244, 255, 0.06); border: 1px solid var(--wr-line); border-radius: 999px; padding: 6px 14px; cursor: pointer; text-decoration: none; }
+  .wr-sh:hover { border-color: var(--wr-cyan-dim); background: rgba(79, 216, 255, 0.12); }
+  .wr-sh:focus-visible, .wr-share-btn:focus-visible { outline: 2px solid var(--wr-cyan); outline-offset: 2px; }
+  .wr-share-url { width: 100%; box-sizing: border-box; font: 12px var(--wr-mono); color: var(--wr-muted); background: rgba(4, 11, 22, 0.6); border: 1px solid var(--wr-line); border-radius: 6px; padding: 7px 10px; }
+  .wr-share-msg { margin: 0; font-size: 12px; color: var(--wr-ok); }
+  .wr-stage { width: 100%; border-collapse: collapse; font-size: 13px; line-height: 1.55; }
+  .wr-stage th { text-align: left; font-weight: 600; color: var(--wr-muted); padding: 8px 10px; border-bottom: 1px solid var(--wr-line); white-space: nowrap; }
+  .wr-stage td { padding: 10px; border-bottom: 1px solid var(--wr-line); vertical-align: top; color: var(--wr-muted); }
+  .wr-stage td:nth-child(3) { color: var(--wr-fg); }
+  .wr-analysis .wr-in > *, .wr-art { min-width: 0; }
+  @media (max-width: 600px) {
+    .wr-stage thead { display: none; }
+    .wr-stage tr { display: grid; grid-template-columns: auto 1fr; gap: 6px 10px; align-items: center; padding: 12px 8px; border-bottom: 1px solid var(--wr-line); }
+    .wr-stage td { border: 0; padding: 0; }
+    .wr-stage td:nth-child(3), .wr-stage td:nth-child(4) { grid-column: 1 / -1; }
+    .wr-stage tr.is-current { background: rgba(79, 216, 255, 0.08); box-shadow: inset 3px 0 0 var(--wr-cyan); }
+  }
+  .wr-stage td.wr-num { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  @media (min-width: 601px) {
+    .wr-stage tr.is-current td { background: rgba(79, 216, 255, 0.08); }
+    .wr-stage tr.is-current td:first-child { box-shadow: inset 3px 0 0 var(--wr-cyan); }
+  }
+  .wr-small { margin: 0; font-size: 13px; line-height: 1.6; color: var(--wr-muted); max-width: 65ch; }
+  .wr-tier { display: inline-block; min-width: 1.4em; text-align: center; font-weight: 700; font-size: 11px; color: var(--wr-bg); background: var(--wr-cyan); border-radius: 4px; padding: 0 4px; }
+  .wr-evs { display: grid; gap: 10px; }
+  .wr-ev { background: var(--wr-panel); border: 1px solid var(--wr-line); border-radius: var(--cds-radius); padding: 12px 16px; }
+  .wr-ev summary { list-style: none; cursor: pointer; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; }
+  .wr-ev summary::-webkit-details-marker { display: none; }
+  .wr-ev-title { font-size: 14px; font-weight: 600; flex: 1 1 14rem; }
+  .wr-ev-btn { font-size: 12px; color: var(--wr-cyan); border: 1px solid var(--wr-cyan-dim); border-radius: 999px; padding: 4px 12px; white-space: nowrap; }
+  .wr-ev[open] .wr-ev-btn { background: rgba(79, 216, 255, 0.15); }
+  .wr-ev summary:focus-visible { outline: 2px solid var(--wr-cyan); outline-offset: 4px; border-radius: 4px; }
+  .wr-ev p { margin: 12px 0 8px; font-size: 14px; line-height: 1.7; color: var(--wr-muted); }
+  .wr-refs { margin: 0; padding-left: 1.1rem; display: grid; gap: 6px; font-size: 13px; line-height: 1.6; color: var(--wr-fg); }
+  .wr-refs a { color: var(--wr-cyan); }
+  .wr-crit { font-size: 13px; }
+  .wr-crit summary { cursor: pointer; color: var(--wr-cyan); width: max-content; }
+  .wr-crit dl { margin: 8px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; }
+  .wr-crit dt { font-weight: 600; }
+  .wr-crit dd { margin: 0; color: var(--wr-muted); }
+  .wr-prep { padding: 18px 18px; border-radius: var(--cds-radius); border: 1px solid var(--wr-line); background: var(--wr-panel); }
+  .wr-prep-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 14px; }
+  .wr-checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .wr-checks li { position: relative; padding-left: 24px; font-size: 14px; line-height: 1.7; color: var(--wr-muted); }
+  .wr-checks li::before { content: "✓"; position: absolute; left: 2px; top: 0; font-size: 13px; color: var(--wr-cyan); opacity: 0.8; }
+  .wr .wr-checks b { color: var(--wr-fg); font-weight: 500; }
+  .wr-prep-items { display: grid; gap: 8px; padding-top: 4px; border-top: 1px solid var(--wr-line); }
+  .wr-prep-label { font-size: 13px; font-weight: 600; color: var(--wr-muted); }
+  .wr-prep-label-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding-top: 10px; }
+  .wr-jump { color: var(--wr-fg); font-weight: 500; text-decoration: underline; text-decoration-color: var(--wr-cyan-dim); text-underline-offset: 3px; }
+  .wr-jump:hover { text-decoration-color: var(--wr-cyan); }
+  .wr-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .wr-chips li { font-size: 13px; color: var(--wr-muted); }
+  .wr-chips li:not(:last-child)::after { content: ","; }
+  .wr-chips { gap: 2px 6px; }
+  .wr-cat-row[data-target] { cursor: pointer; border-radius: 6px; margin: -4px -6px; padding: 4px 6px; }
+  .wr-cat-row[data-target]:hover { background: rgba(79, 216, 255, 0.08); }
+  .wr-cat-row[data-target]:focus-visible { outline: 2px solid var(--wr-cyan); outline-offset: 1px; }
+  .wr-cat-go { color: var(--wr-cyan); font-size: 12px; margin-left: 4px; }
+  .wr .wr-ptitle-sub { font-weight: 400; color: var(--wr-muted); margin-left: 6px; font-size: 11px; }
+  .wr-site-foot { padding-block: 20px 28px; border-top: 1px solid var(--wr-line); }
+  .wr-site-foot p { max-width: 820px; margin: 0 auto; font-size: 12px; line-height: 1.7; color: var(--wr-muted); }
+  .wr-site-foot a { color: var(--wr-muted); }
+  .wr-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+  .wr-disclaimer { margin: 0; max-width: 46ch; text-align: right; font-size: 11px; line-height: 1.6; color: var(--wr-muted); }
+  .wr-ad-label { font-size: 11px; font-weight: 600; color: var(--wr-bg); background: var(--wr-muted); border-radius: 4px; padding: 1px 7px; }
+  .wr-kit-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; }
+  .wr-kit-ad:not([hidden]) { display: inline-flex; align-items: center; gap: 8px; }
+  p.wr-kit-ad:not([hidden]) { display: block; }
+  .wr-ad-notice { margin: 0; font-size: 13px; font-weight: 600; line-height: 1.6; color: var(--wr-fg); background: rgba(143, 169, 196, 0.12); border: 1px solid var(--wr-muted); border-radius: var(--cds-radius); padding: 8px 12px; }
+  .wr-kit-items { margin: 0; font-size: 14px; line-height: 1.8; color: var(--wr-muted); }
+  .wr .wr-kit-items b { color: var(--wr-fg); margin-right: 6px; }
+  .wr-ad-toggle { cursor: pointer; font-family: inherit; }
+  .wr-info { width: 20px; height: 20px; padding: 0; border-radius: 50%; border: 1.5px solid var(--wr-muted); background: transparent; color: var(--wr-muted); font: 700 12px/1 Georgia, serif; display: inline-grid; place-items: center; }
+  .wr-info:hover, .wr-info[aria-expanded="true"] { color: var(--wr-fg); border-color: var(--wr-fg); }
+  .wr-ad-toggle:focus-visible { outline: 2px solid var(--wr-cyan); outline-offset: 2px; }
+  .wr .wr-ad-small { margin: 0; font-size: 11px; line-height: 1.6; color: var(--wr-muted); }
+  .wr-kit-buy { font-size: 13px; color: var(--wr-cyan); background: rgba(79, 216, 255, 0.08); border: 1px solid var(--wr-cyan-dim); border-radius: 999px; padding: 5px 14px; text-decoration: none; white-space: nowrap; }
+  .wr-kit-buy:hover { background: rgba(79, 216, 255, 0.16); }
+  .wr-kit-buy:focus-visible { outline: 2px solid var(--wr-fg); outline-offset: 2px; }
+  .wr-trip-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+  .wr-trip-head .wr-ptitle { margin: 0; }
+  .wr-trip-count { font-family: var(--wr-mono); font-size: 12px; color: var(--wr-muted); }
+  .wr .wr-trip-count b { font-size: 18px; color: var(--wr-fg); font-weight: 400; }
+  .wr-sigs { display: grid; gap: 8px; }
+  .wr-sig { display: grid; grid-template-columns: 4.6rem minmax(0, 1fr) auto; gap: 10px; align-items: center; font-size: 13px; padding: 6px 0; border-bottom: 1px solid var(--wr-line); }
+  .wr-sig:last-child { border-bottom: 0; }
+  .wr-led { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; color: var(--wr-muted); white-space: nowrap; }
+  .wr-led::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: currentColor; box-shadow: 0 0 10px currentColor; flex: none; }
+  .wr-sig-val { font-family: var(--wr-mono); font-size: 11px; color: var(--wr-muted); text-align: right; }
+  .wr-sig-note { margin: 10px 0 0; font-size: 12px; color: var(--wr-muted); line-height: 1.5; }
+  .wr-shelter { border-color: var(--wr-cyan-dim) !important; }
+  .wr-shelter-p { margin: 0; font-size: 14px; line-height: 1.7; color: var(--wr-muted); }
+  .wr-shelter-links { display: flex; flex-wrap: wrap; gap: 8px; }
+  .wr-shelter-btn { font-size: 14px; color: var(--wr-bg); background: var(--wr-cyan); border-radius: 999px; padding: 8px 16px; text-decoration: none; font-weight: 600; }
+  .wr-shelter-btn:hover { filter: brightness(1.1); }
+  .wr-shelter-btn:focus-visible { outline: 2px solid var(--wr-fg); outline-offset: 2px; }
+  .wr-guide { display: grid; gap: 12px; }
+  .wr-guide .wr-list b { color: var(--wr-fg); }
+  #guide .wr-box { border-color: rgba(255, 200, 87, 0.3); }
+  .wr-down:hover { background: rgba(79, 216, 255, 0.16); }
+  .wr-down:focus-visible { outline: 2px solid var(--wr-cyan); outline-offset: 2px; }
+
+  /* analysis */
+  .wr-analysis { padding-block: 48px 56px; border-top: 1px solid var(--wr-line); background: linear-gradient(180deg, var(--wr-bg), #050f1d); }
+  .wr-analysis .wr-in { max-width: 820px; display: grid; gap: 40px; }
+  .wr h2 { margin: 0; font-family: var(--font-anthropic-serif); font-weight: 400; font-size: 1.9rem; }
+  .wr h3 { margin: 0; font-size: 1.15rem; font-weight: 600; display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; }
+  .wr-lead, .wr-art p { margin: 0; color: var(--wr-muted); line-height: 1.75; font-size: 15px; max-width: 65ch; }
+  .wr-steps { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); counter-reset: s; }
+  .wr-steps li { counter-increment: s; background: var(--wr-panel); border: 1px solid var(--wr-line); border-radius: var(--cds-radius); padding: 14px 16px; font-size: 14px; line-height: 1.6; color: var(--wr-muted); }
+  .wr-steps li::before { content: "STEP " counter(s); display: block; font-family: var(--wr-mono); font-size: 11px; letter-spacing: 0.16em; color: var(--wr-cyan); margin-bottom: 6px; }
+  .wr-steps b { color: var(--wr-fg); }
+  .wr-art { display: grid; gap: 14px; }
+  .wr-art-score { font-family: var(--wr-mono); font-size: 13px; color: var(--wr-cyan); font-weight: 400; }
+  .wr-ind { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .wr-ind li { display: grid; gap: 6px; padding: 14px 16px; border-radius: var(--cds-radius); background: var(--wr-panel); border: 1px solid var(--wr-line); border-left: 3px solid var(--wr-none); }
+  .wr-ind li.is-ok { border-left-color: var(--wr-ok); }
+  .wr-ind li.is-warn { border-left-color: var(--wr-warn); }
+  .wr-ind li.is-bad { border-left-color: var(--wr-bad); }
+  .wr-ind-top { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; }
+  .wr-ind-name { font-weight: 600; font-size: 14px; }
+  .wr-ind-val { font-family: var(--wr-mono); font-size: 13px; color: var(--wr-cyan); }
+  .wr-ind-note { font-size: 14px; color: var(--wr-muted); line-height: 1.6; }
+  .wr-ind-meta { font-family: var(--wr-mono); font-size: 11px; color: var(--wr-muted); display: flex; flex-wrap: wrap; gap: 4px 14px; }
+  .wr-ind-meta a, .wr-tl a { color: var(--wr-cyan); }
+  .wr-chip { display: inline-block; font-size: 12px; padding: 1px 9px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+  .c-ok { color: var(--wr-ok); } .c-warn { color: var(--wr-warn); } .c-bad { color: var(--wr-bad); } .c-none { color: var(--wr-none); } .c-info { color: var(--wr-cyan); }
+  .wr-tl { list-style: none; margin: 0; padding: 0 0 0 18px; border-left: 1px solid var(--wr-cyan-dim); display: grid; gap: 18px; }
+  .wr-tl li { position: relative; display: grid; gap: 4px; }
+  .wr-tl li::before { content: ""; position: absolute; left: -23px; top: 6px; width: 9px; height: 9px; border-radius: 50%; background: var(--wr-bg); border: 2px solid currentColor; box-shadow: 0 0 8px currentColor; }
+  .wr-tl-date { font-family: var(--wr-mono); font-size: 12px; color: var(--wr-muted); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .wr-tl-title { font-size: 14px; line-height: 1.55; color: var(--wr-fg); }
+  .wr-tl-src { font-family: var(--wr-mono); font-size: 11px; }
+  .wr-split { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
+  .wr-box { background: var(--wr-panel); border: 1px solid var(--wr-line); border-radius: var(--cds-radius); padding: 16px 18px; display: grid; gap: 10px; align-content: start; }
+  .wr-box h4 { margin: 0; font-size: 14px; font-weight: 600; }
+  .wr-list { margin: 0; padding-left: 1.1rem; font-size: 14px; line-height: 1.7; color: var(--wr-muted); }
+  .wr-ptitle, .wr-trip-count, .wr-sig-val, .wr-hero-foot, .wr-down, .wr-ind-val, .wr-ind-meta, .wr-cat-val, .wr-art-score { font-family: var(--font-anthropic-sans); letter-spacing: 0; font-variant-numeric: tabular-nums; }
+  .wr-ptitle { font-size: 12px; font-weight: 600; }
+  .wr-ind-val { font-weight: 600; }
+  [data-dash-source-state=refreshing] { opacity: 0.5; transition: opacity var(--cds-dur-slow); }
+</style>
+
+</head>
+<body>
+<div class="wr">
+  <section class="wr-hero wr-pad" id="top">
+    <div class="wr-net" data-draw="net" aria-hidden="true"></div>
+    <div class="wr-in">
+      <div class="wr-top">
+        <p class="wr-disclaimer" id="disclaimer">AI가 공개 보도를 바탕으로 판정한 참고 지표로, 공식 경보가 아닙니다. 실제 대피는 재난문자와 정부 발표를 따르세요.</p>
+        <button type="button" class="wr-share-btn" aria-expanded="false" aria-controls="share-panel">공유하기</button>
+      </div>
+      <div class="wr-share" id="share-panel" hidden>
+        <div class="wr-share-row">
+          <button type="button" class="wr-sh" data-copy="kakao">카카오톡</button>
+          <button type="button" class="wr-sh" data-copy="insta">인스타그램</button>
+          <a class="wr-sh" href="https://www.threads.net/intent/post?text=%ED%95%9C%EB%B0%98%EB%8F%84%20%EC%A0%84%EC%9F%81%20%EC%9C%84%ED%97%98%20%EC%A7%80%ED%91%9C%3A%20%EA%B3%B5%EA%B0%9C%20%EB%B3%B4%EB%8F%84%EB%A1%9C%20%EC%A0%95%EB%A6%AC%ED%95%9C%20%EC%B0%B8%EA%B3%A0%20%EC%A7%80%ED%91%9C%20https%3A//stvzn123-ctrl.github.io/war-risk-monitor/" target="_blank" rel="noopener">스레드</a>
+          <a class="wr-sh" href="https://twitter.com/intent/tweet?text=%ED%95%9C%EB%B0%98%EB%8F%84%20%EC%A0%84%EC%9F%81%20%EC%9C%84%ED%97%98%20%EC%A7%80%ED%91%9C%3A%20%EA%B3%B5%EA%B0%9C%20%EB%B3%B4%EB%8F%84%EB%A1%9C%20%EC%A0%95%EB%A6%AC%ED%95%9C%20%EC%B0%B8%EA%B3%A0%20%EC%A7%80%ED%91%9C&amp;url=https%3A%2F%2Fstvzn123-ctrl.github.io%2Fwar-risk-monitor%2F" target="_blank" rel="noopener">X</a>
+          <a class="wr-sh" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fstvzn123-ctrl.github.io%2Fwar-risk-monitor%2F" target="_blank" rel="noopener">페이스북</a>
+          <button type="button" class="wr-sh" data-copy="link">링크 복사</button>
+        </div>
+        <input class="wr-share-url" id="share-url" type="text" readonly value="https://stvzn123-ctrl.github.io/war-risk-monitor/" aria-label="페이지 주소">
+        <p class="wr-share-msg" data-msg="kakao" hidden>링크를 복사했어요. 카카오톡 대화방에 붙여넣으세요.</p>
+        <p class="wr-share-msg" data-msg="insta" hidden>링크를 복사했어요. 인스타그램 스토리나 DM에 붙여넣으세요. 인스타그램은 웹에서 바로 공유하는 기능이 없어요.</p>
+        <p class="wr-share-msg" data-msg="link" hidden>링크를 복사했어요.</p>
+        <p class="wr-share-msg" data-msg="fail" hidden>자동 복사가 안 됐어요. 위 주소를 길게 눌러 복사하세요.</p>
+      </div>
+      <div>
+        <div class="wr-eyebrow">KOREAN PENINSULA · WAR RISK MONITOR</div>
+        <h1>한반도 전쟁 위험 지표</h1>
+        <p class="wr-take">종합 위험 점수 <b data-draw="score" data-source="risk" data-field="score" data-row="0">—</b>점, 판정은 <b data-draw="band" data-source="risk" data-field="band" data-row="0">—</b>입니다. 국지적 충돌 신호는 늘었지만, 대피령과 여행경보처럼 전면전 직전에 나오는 신호는 아직 없습니다. 이 점수는 전쟁이 날 확률이 아닙니다.</p>
+      </div>
+
+      <div class="wr-hero-grid">
+        <div class="wr-radar" id="score-card">
+          <div class="wr-sweep" aria-hidden="true"></div>
+          <div class="wr-ring" data-draw="ring" data-source="risk"></div>
+          <div class="wr-center">
+            <div class="wr-cap">RISK SCORE</div>
+            <div class="wr-score"><span data-draw="score" data-source="risk" data-field="score" data-row="0">—</span><small>/100</small></div>
+            <span class="wr-pill" data-draw="band" data-source="risk" data-field="band" data-row="0">—</span>
+          </div>
+        </div>
+
+        <div class="wr-side">
+          <div class="wr-panel" id="tripwires">
+            <div class="wr-trip-head">
+              <span class="wr-ptitle">전면전 직전 신호</span>
+              <span class="wr-trip-count">켜진 신호 <b data-draw="tripcount" data-source="tripwires" data-field="lit" data-row="0">—</b> / 5</span>
+            </div>
+            <div class="wr-sigs">
+              <div class="wr-sig"><span class="wr-led" data-draw="led" data-source="indicators" data-field="status" data-where="id=d2">—</span><span class="wr-sig-name">주한미군 가족 대피(NEO)</span><span class="wr-sig-val" data-draw="sigval" data-source="indicators" data-field="value" data-where="id=d2">—</span></div>
+              <div class="wr-sig"><span class="wr-led" data-draw="led" data-source="indicators" data-field="status" data-where="id=d1">—</span><span class="wr-sig-name">미국 여행경보</span><span class="wr-sig-val" data-draw="sigval" data-source="indicators" data-field="value" data-where="id=d1">—</span></div>
+              <div class="wr-sig"><span class="wr-led" data-draw="led" data-source="indicators" data-field="status" data-where="id=d5">—</span><span class="wr-sig-name">대사관 철수</span><span class="wr-sig-val" data-draw="sigval" data-source="indicators" data-field="value" data-where="id=d5">—</span></div>
+              <div class="wr-sig"><span class="wr-led" data-draw="led" data-source="indicators" data-field="status" data-where="id=m5">—</span><span class="wr-sig-name">북한 병력 동원</span><span class="wr-sig-val" data-draw="sigval" data-source="indicators" data-field="value" data-where="id=m5">—</span></div>
+              <div class="wr-sig"><span class="wr-led" data-draw="led" data-source="indicators" data-field="status" data-where="id=m6">—</span><span class="wr-sig-name">정보감시태세(워치콘)</span><span class="wr-sig-val" data-draw="sigval" data-source="indicators" data-field="value" data-where="id=m6">—</span></div>
+            </div>
+            <p class="wr-sig-note">다섯 개 모두 꺼져 있으면 전면전이 임박했다는 공개 신호는 없다는 뜻입니다.</p>
+          </div>
+          <div class="wr-panel" id="by-category">
+            <div class="wr-ptitle">분야별 점수 <span class="wr-ptitle-sub">누르면 근거로 이동</span></div>
+            <div class="wr-cats" data-draw="catbars" data-source="risk_by_cat"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wr-hero-foot">
+        <span>마지막 확인 <span data-draw="checked" data-source="risk" data-field="checked" data-row="0">—</span> · 약 3시간마다 갱신</span>
+        <span class="wr-btns">
+          <button type="button" class="wr-down" data-target="kit">지금 미리 해둘 것</button>
+          <button type="button" class="wr-down" data-target="shelter">근처 대피소 찾기</button>
+          <button type="button" class="wr-down" data-target="guide">비상시 행동 요령</button>
+          <button type="button" class="wr-down" data-target="analysis">분석 근거 보기 ↓</button>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="wr-analysis wr-pad" id="analysis">
+    <div class="wr-in">
+      <div class="wr-art">
+        <h2>분석 근거</h2>
+        <p class="wr-lead">위 판정은 정보기관의 경고 분석 방법과 국제정치학 연구를 참고해 만든 기준으로 내립니다. 각 원칙의 근거 자료는 아래 '판단 방법의 근거'에서 '근거 보기'를 눌러 확인할 수 있습니다.</p>
+        <ol class="wr-steps">
+          <li><b>공개 정보 수집.</b> 뉴스, 정부 발표, 환율과 주가, 예측시장 가격을 약 3시간마다 웹 검색으로 모읍니다.</li>
+          <li><b>지표별 판정.</b> 14개 지표마다 미리 정한 기준에 따라 정상, 주의, 위험으로 판정합니다. 근거를 못 찾으면 확인 불가로 두고 계산에서 뺍니다.</li>
+          <li><b>단계 결정.</b> 아래 규칙으로 4단계 중 하나를 정하고, 점수는 그 단계 범위 안에서 지표의 가중 평균으로 정합니다.</li>
+        </ol>
+      </div>
+
+      <article class="wr-art" id="stages">
+        <h3>판정 단계</h3>
+        <p>정부 위기경보(관심·주의·경계·심각)와 한미연합사 정보감시태세(워치콘)처럼 단계적으로 올라가는 구조를 참고했습니다. 공식 경보 단계와는 다른, 이 페이지만의 기준입니다. 지금 단계의 줄이 강조됩니다.</p>
+        <div class="wr-tablewrap">
+          <table class="wr-stage">
+            <thead><tr><th>단계</th><th>점수</th><th>의미</th><th>들어가는 조건</th></tr></thead>
+            <tbody>
+              <tr data-stage="평시"><td><span class="wr-chip c-ok">평시</span></td><td class="wr-num">0–14</td><td>도발이 없거나 평소 수준</td><td>아래 조건에 해당하지 않음</td></tr>
+              <tr data-stage="긴장"><td><span class="wr-chip c-warn">긴장</span></td><td class="wr-num">15–34</td><td>국지적 충돌 신호는 있지만 전면전 준비 징후는 없음</td><td>B등급 지표 하나 이상이 주의 이상, 또는 C등급 지표 2개 이상이 주의 이상</td></tr>
+              <tr data-stage="경계"><td><span class="wr-chip c-warn">경계</span></td><td class="wr-num">35–59</td><td>여러 분야에서 동시에 이상 신호. 대피·외교 쪽 지표도 움직이기 시작</td><td>A등급 지표 하나가 위험, A등급 2개 이상이 주의 이상, 또는 B등급 2개 이상이 위험</td></tr>
+              <tr data-stage="위험"><td><span class="wr-chip c-bad">위험</span></td><td class="wr-num">60–100</td><td>대피령, 동원, 대사관 철수 같은 전면전 직전 신호가 다수 켜짐</td><td>A등급 지표 2개 이상이 위험</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="wr-small">점수는 정상 0, 주의 0.5, 위험 1로 바꾼 지표의 가중 평균(0–100)이며, 위 규칙으로 정한 단계의 범위를 벗어나지 않게 맞춥니다. 평균만 쓰면 가장 무거운 신호 하나가 켜져도 단계가 잘 오르지 않기 때문입니다.</p>
+      </article>
+
+      <article class="wr-art wr-prep" id="kit">
+        <div class="wr-prep-head">
+          <h3>지금 미리 해둘 것</h3>
+        </div>
+        <ul class="wr-checks">
+          <li>집·회사 근처 <a class="wr-jump" href="#shelter">민방위 대피소 위치</a> 확인 (지하철역, 지하주차장, 건물 지하층)</li>
+          <li>가족과 연락이 끊겼을 때 <b>만날 장소</b> 정하기</li>
+          <li>아래 <b>비상용품</b>을 한곳에 모아 두기</li>
+        </ul>
+        <div class="wr-prep-items">
+          <div class="wr-prep-label-row">
+            <span class="wr-prep-label">비상용품</span>
+            <span class="wr-kit-ad" hidden><a class="wr-kit-buy" data-draw="kitbuy" data-source="shop" target="_blank" rel="noopener sponsored">재난 파우치 구매하러 가기</a><button type="button" class="wr-info wr-ad-toggle" aria-expanded="false" aria-controls="ad-note" aria-label="광고 안내 보기" title="광고 안내">i</button></span>
+          </div>
+          <p class="wr-ad-small" id="ad-note" hidden>[광고] '재난 파우치 구매하러 가기'는 이 페이지 운영자가 직접 판매하는 상품으로 연결됩니다. 위험 판정과 관계없이 평소 준비용으로 소개합니다.</p>
+          <ul class="wr-chips"><li>물 (1인 하루 3L씩 3일분)</li><li>비상식량</li><li>손전등</li><li>여분 건전지</li><li>휴대용 라디오</li><li>보조배터리</li><li>방독면 (KS 인증 제품)</li><li>마스크</li><li>상비약 (약국 구입)</li><li>신분증</li><li>현금</li></ul>
+        </div>
+      </article>
+
+      <article class="wr-art" id="guide">
+        <h3>비상시 행동 요령</h3>
+        <p>정부 민방위 지침을 짧게 정리했습니다. 평소에 대피소 위치와 가족 연락 방법만 정해 둬도 대부분 대비가 됩니다.</p>
+        <div class="wr-guide">
+          <div class="wr-box wr-shelter" id="shelter">
+            <h4>근처 대피소 찾기</h4>
+            <p class="wr-shelter-p">아래 지도를 열면 지금 보고 있는 지역 주변의 민방위 대피소가 표시됩니다. 위치 권한을 허용하면 내 위치 기준으로 보여줍니다. 핵·화생방 대비 시설과 지진 대피 장소는 다르니, 민방위 대피소인지 확인하세요.</p>
+            <div class="wr-shelter-links">
+              <a class="wr-shelter-btn" href="https://map.naver.com/p/search/%EB%AF%BC%EB%B0%A9%EC%9C%84%EB%8C%80%ED%94%BC%EC%86%8C" target="_blank" rel="noopener">네이버 지도에서 보기</a>
+              <a class="wr-shelter-btn" href="https://map.kakao.com/?q=%EB%AF%BC%EB%B0%A9%EC%9C%84%EB%8C%80%ED%94%BC%EC%86%8C" target="_blank" rel="noopener">카카오맵에서 보기</a>
+              <a class="wr-shelter-btn" href="https://www.safekorea.go.kr" target="_blank" rel="noopener">국민재난안전포털</a>
+            </div>
+            <p class="wr-shelter-p">스마트폰에는 행정안전부 '안전디딤돌' 앱을 미리 설치해 두세요. 앱의 '대피소조회'에서 내 주변 대피소와 수용 인원을 볼 수 있고, 인터넷이 느려도 재난문자를 모아 볼 수 있습니다. 국민재난안전포털에서는 민방위 → 비상시설 메뉴에서 시·군·구별로 찾습니다.</p>
+          </div>
+          <div class="wr-box">
+            <h4>경보가 울리면</h4>
+            <ul class="wr-list">
+              <li><b>경계경보</b> (1분간 평탄한 사이렌): 대피 준비. 비상용품 챙기고 라디오·TV 확인</li>
+              <li><b>공습경보</b> (1분간 오르내리는 사이렌): 즉시 가까운 지하 대피소로</li>
+              <li>엘리베이터 대신 계단, 나가기 전 가스·전기 차단</li>
+              <li>운전 중이면 도로 오른쪽에 세우고 열쇠를 꽂아 둔 채 대피</li>
+            </ul>
+          </div>
+          <div class="wr-box">
+            <h4>대피한 뒤</h4>
+            <ul class="wr-list">
+              <li>재난문자와 KBS 재난방송(라디오)으로만 정보 확인. SNS 소문은 믿지 않기</li>
+              <li>해제 방송 전에는 밖으로 나가지 않기</li>
+              <li>화학 공격 의심 시 젖은 수건으로 입·코를 막고 바람 반대 방향, 높은 층으로</li>
+              <li>핵 섬광을 보면 즉시 엎드려 눈을 가리고, 이후 지하 깊은 곳에서 최소 하루 이상 머물기</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="wr-art" id="cat-military">
+        <h3>군사 신호 <span class="wr-art-score">분야 점수 <span data-draw="catscore" data-source="risk_by_cat" data-field="score" data-where="category=군사">—</span></span></h3>
+        <p>미사일 발사나 군사분계선 침범은 북한이 평소에도 자주 하는 일이라 C등급(가중치 1)입니다. 포병 배치와 워치콘은 군사 태세의 변화라 B등급, 병력 동원은 실제 전쟁을 준비할 때만 나오고 숨기기도 어려워 A등급으로 가장 무겁게 봅니다.</p>
+        <ul class="wr-ind" data-draw="indlist" data-cat="군사" data-source="indicators"></ul>
+      </article>
+
+      <article class="wr-art" id="cat-diplomacy">
+        <h3>외교·대피 신호 <span class="wr-art-score">분야 점수 <span data-draw="catscore" data-source="risk_by_cat" data-field="score" data-where="category=외교·대피">—</span></span></h3>
+        <p>각국 정부는 정보기관의 비공개 판단을 바탕으로 자국민 보호 조치를 내립니다. 그래서 여행경보 상향이나 주한미군 가족 대피(NEO)는 공개 정보 중 가장 믿을 만한 경고입니다. 대피는 비용이 매우 커서 확신이 없으면 발령하지 않습니다.</p>
+        <ul class="wr-ind" data-draw="indlist" data-cat="외교·대피" data-source="indicators"></ul>
+      </article>
+
+      <article class="wr-art" id="cat-market">
+        <h3>시장 신호 <span class="wr-art-score">분야 점수 <span data-draw="catscore" data-source="risk_by_cat" data-field="score" data-where="category=시장">—</span></span></h3>
+        <p>외국인 투자자는 전쟁 위험을 느끼면 먼저 돈을 뺍니다. 원화가 급락하고 국가 부도 위험(CDS)이 함께 오르면 시장이 위험을 가격에 반영하기 시작했다는 뜻입니다. 주가는 다른 이유로도 크게 움직이므로 단독으로는 약한 신호입니다.</p>
+        <ul class="wr-ind" data-draw="indlist" data-cat="시장" data-source="indicators"></ul>
+      </article>
+
+      <article class="wr-art" id="forecasts">
+        <h3>예측시장과 전문 예측</h3>
+        <p>예측시장 가격은 돈을 건 사람들의 집단 판단입니다. 다만 거래량이 적으면 몇 명의 베팅으로도 크게 흔들리고, 질문마다 판정 기준이 달라 숫자를 그대로 비교하면 안 됩니다. 폴리마켓은 한국에서 접속이 차단되어 있어 집계 사이트의 가격을 씁니다.</p>
+        <ul class="wr-ind" data-draw="fclist" data-source="forecasts"></ul>
+      </article>
+
+      <article class="wr-art" id="timeline">
+        <h3>최근 사건</h3>
+        <p>긴장을 높이거나 낮춘 사건을 최근 순으로 정리했습니다.</p>
+        <ol class="wr-tl" data-draw="events" data-source="events"></ol>
+      </article>
+
+      <div class="wr-split" id="limits">
+        <div class="wr-box">
+          <h4>전면전 직전에 나올 신호</h4>
+          <ul class="wr-list">
+            <li>주한미군 가족·민간인 대피(NEO) 발령</li>
+            <li>미국·일본의 한국 여행경보 3단계 이상 상향</li>
+            <li>각국 대사관의 철수 권고나 인원 감축</li>
+            <li>북한의 예비군 소집, 대규모 병력·연료 이동</li>
+            <li>원화 급락과 CDS 급등이 함께 나타남</li>
+          </ul>
+        </div>
+        <div class="wr-box">
+          <h4>이 페이지의 한계</h4>
+          <ul class="wr-list">
+            <li>공개 보도만 씁니다. 정보기관의 위성·감청 자료는 없습니다.</li>
+            <li>상태 판정과 가중치는 Claude가 정한 기준입니다.</li>
+            <li>약 3시간마다 갱신되며 실시간이 아닙니다.</li>
+            <li>1953년 정전 이후 도발은 많았지만 전면전은 한 번도 없었습니다.</li>
+          </ul>
+        </div>
+      </div>
+
+      <article class="wr-art" id="tiers">
+        <h3>지표 등급과 가중치</h3>
+        <p>숨기기 어렵고 비용이 큰 행동일수록 진짜 의도를 드러낸다는 '값비싼 신호' 이론에 따라 지표를 세 등급으로 나눴습니다. 자주 반복되는 신호는 전쟁 여부를 가려내는 힘이 약해서 가볍게 둡니다.</p>
+        <div class="wr-tablewrap">
+          <table class="wr-stage">
+            <thead><tr><th>등급</th><th>가중치</th><th>성격</th><th>지표</th></tr></thead>
+            <tbody>
+              <tr><td><span class="wr-tier">A</span></td><td class="wr-num">4</td><td>전면전 직전에만 나오는 비싼 행동</td><td>주한미군 가족 대피(NEO), 대사관 철수, 북한 병력 동원, 미국 여행경보</td></tr>
+              <tr><td><span class="wr-tier">B</span></td><td class="wr-num">2</td><td>군사 태세 변화와 실제 피해</td><td>정보감시태세(워치콘), 접경 포병 배치, DMZ 피해 사건, 일본 위험정보</td></tr>
+              <tr><td><span class="wr-tier">C</span></td><td class="wr-num">1</td><td>자주 반복되는 신호</td><td>미사일 발사, 군사분계선 침범, 남북 대화 채널, 원/달러 환율, KOSPI, CDS</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="wr-small">첫 화면의 '전면전 직전 신호'는 A등급 4개와 워치콘입니다. 지표마다 정상·주의·위험을 가르는 기준은 각 카드의 '판단 기준'에서 볼 수 있습니다.</p>
+      </article>
+
+      <article class="wr-art" id="evidence">
+        <h3>판단 방법의 근거</h3>
+        <p>판단 방법의 원칙과 근거 자료입니다. 등급, 가중치, 단계 경계값은 아래 연구와 공식 체계를 참고해 이 페이지가 정한 것이며, 자료에 그대로 나오는 수치는 아닙니다.</p>
+        <div class="wr-evs">
+          <details class="wr-ev">
+            <summary><span class="wr-ev-title">1. 공격 전에 나타나는 준비 행동을 목록으로 감시한다</span><span class="wr-ev-btn">근거 보기</span></summary>
+            <p>정보기관의 경고 분석(Indications &amp; Warning)은 공격 전에 반드시 필요한 준비 행동, 곧 병력 동원, 병참, 배치 변화를 지표 목록으로 만들어 감시합니다. 이 페이지의 지표 목록과 '전면전 직전 신호'가 이 방식을 따릅니다.</p>
+            <ul class="wr-refs">
+              <li>Grabo, C. M. (2002). <i>Anticipating Surprise: Analysis for Strategic Warning</i>. Joint Military Intelligence College. <a href="https://apps.dtic.mil/sti/pdfs/ADA476752.pdf" target="_blank" rel="noopener">DTIC 원문 PDF</a></li>
+              <li>Grabo, C. M. <i>A Handbook of Warning Intelligence</i> (기밀 해제본, 동원 분석·병참 장 포함). <a href="https://www.cia.gov/readingroom/node/903445" target="_blank" rel="noopener">CIA 열람실</a></li>
+            </ul>
+          </details>
+          <details class="wr-ev">
+            <summary><span class="wr-ev-title">2. 비용이 큰 행동일수록 무겁게 본다 (A등급 가중치 4)</span><span class="wr-ev-btn">근거 보기</span></summary>
+            <p>병력 동원처럼 미리 비용을 치르는 행동은 허세로 하기 어려워 진짜 의도를 드러내는 신호가 됩니다. 자국민 대피, 대사관 철수, 동원은 비용이 매우 커서 가장 무겁게 둡니다.</p>
+            <ul class="wr-refs">
+              <li>Fearon, J. D. (1997). Signaling Foreign Policy Interests: Tying Hands versus Sinking Costs. <i>Journal of Conflict Resolution</i>, 41(1), 68–90. <a href="https://ideas.repec.org/a/sae/jocore/v41y1997i1p68-90.html" target="_blank" rel="noopener">서지 정보</a></li>
+              <li>Slantchev, B. L. (2005). Military Coercion in Interstate Crises. <i>American Political Science Review</i>, 99(4). <a href="https://pages.ucsd.edu/~bslantchev/published/pdf/MilCoerce-W00B.pdf" target="_blank" rel="noopener">저자 공개 PDF</a></li>
+            </ul>
+          </details>
+          <details class="wr-ev">
+            <summary><span class="wr-ev-title">3. 자주 반복되는 도발은 가볍게 본다 (기저율)</span><span class="wr-ev-btn">근거 보기</span></summary>
+            <p>1958년 이후 북한의 도발은 460건 이상 기록됐지만 1953년 정전 이후 전면전으로 이어진 적은 없습니다. 미사일 발사나 군사분계선 침범만으로는 전쟁 여부를 가려내기 어려워 C등급에 둡니다.</p>
+            <ul class="wr-refs">
+              <li>CSIS Beyond Parallel. Database: North Korean Provocations. <a href="https://beyondparallel.csis.org/database-north-korean-provocations/" target="_blank" rel="noopener">데이터베이스</a></li>
+            </ul>
+          </details>
+          <details class="wr-ev">
+            <summary><span class="wr-ev-title">4. 정부의 공식 판단을 지표로 쓴다</span><span class="wr-ev-btn">근거 보기</span></summary>
+            <p>각국 정부는 공개되지 않은 정보까지 반영해 자국민 보호 조치를 내립니다. 그래서 여행경보 단계, 비전투원 대피, 정보감시태세 변화를 직접 지표로 씁니다. 미국 여행경보는 3단계 '여행 재고'부터 위험으로 봅니다.</p>
+            <ul class="wr-refs">
+              <li>미국 국무부. Travel Advisories (1단계 일반 주의 ~ 4단계 여행 금지). <a href="https://travel.state.gov/en/international-travel/travel-advisories/south-korea.html" target="_blank" rel="noopener">한국 여행경보</a></li>
+              <li>주한미군 비전투원 대피(NEO) 안내. <a href="https://www.rsokorea.org/noncombatantevacuation.html" target="_blank" rel="noopener">RSO Korea</a></li>
+              <li>한미연합사 정보감시태세(워치콘) 단계 설명. <a href="https://www.hankyung.com/amp/2015082181727" target="_blank" rel="noopener">한국경제</a></li>
+            </ul>
+          </details>
+          <details class="wr-ev">
+            <summary><span class="wr-ev-title">5. 위험은 4단계로 나눠 표시한다</span><span class="wr-ev-btn">근거 보기</span></summary>
+            <p>정부 위기경보는 관심, 주의, 경계, 심각의 4단계로 발령하고, 워치콘도 평시부터 전쟁 직전까지 단계를 나눕니다. 이 페이지도 같은 구조로 평시, 긴장, 경계, 위험의 4단계를 씁니다.</p>
+            <ul class="wr-refs">
+              <li>재난 및 안전관리 기본법 제38조 (위기경보의 발령 등). <a href="https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%EC%9E%AC%EB%82%9C%EB%B0%8F%EC%95%88%EC%A0%84%EA%B4%80%EB%A6%AC%EA%B8%B0%EB%B3%B8%EB%B2%95" target="_blank" rel="noopener">국가법령정보센터</a></li>
+            </ul>
+          </details>
+          <details class="wr-ev">
+            <summary><span class="wr-ev-title">6. 시장 신호는 보조로만 쓴다</span><span class="wr-ev-btn">근거 보기</span></summary>
+            <p>북한 도발에 대한 주가와 환율 반응은 대체로 작고 짧았으며 시간이 갈수록 약해졌습니다. 다만 평소보다 크고 오래가는 하락은 시장이 위험을 크게 본다는 뜻이라, 북한 요인으로 큰 변동이 있을 때만 주의 이상으로 판정합니다.</p>
+            <ul class="wr-refs">
+              <li>Dibooglu, S., &amp; Cevik, E. I. (2016). The effect of North Korean threats on financial markets in South Korea and Japan. <i>Journal of Asian Economics</i>. <a href="https://profiles.umsl.edu/en/publications/the-effect-of-north-korean-threats-on-financial-markets-in-south-/" target="_blank" rel="noopener">서지 정보</a></li>
+              <li>Ferrier, K. Provoking the Market: North Korea’s Impact on the South Korean Economy. Korea Economic Institute of America. <a href="https://keia.org/analysis/provoking-the-market-north-koreas-impact-on-the-south-korean-economy/" target="_blank" rel="noopener">KEI 분석</a></li>
+              <li>Caldara, D., &amp; Iacoviello, M. (2022). Measuring Geopolitical Risk. <i>American Economic Review</i>, 112(4), 1194–1225. <a href="https://www.aeaweb.org/doi/10.1257/aer.20191823" target="_blank" rel="noopener">논문</a></li>
+            </ul>
+          </details>
+          <details class="wr-ev">
+            <summary><span class="wr-ev-title">7. 확률 예측은 점수에 넣지 않고 참고로만 보여준다</span><span class="wr-ev-btn">근거 보기</span></summary>
+            <p>여러 사람의 판단을 모은 예측은 개인 판단보다 정확한 경우가 많다는 연구가 있지만, 거래가 적은 예측시장은 쉽게 흔들립니다. 또 공개된 조기경보 시스템은 방법을 공개해야 검증할 수 있어서, 이 페이지도 기준과 출처를 모두 공개합니다.</p>
+            <ul class="wr-refs">
+              <li>Mellers, B. et al. (2014). Psychological Strategies for Winning a Geopolitical Forecasting Tournament. <i>Psychological Science</i>, 25(5), 1106–1115. <a href="https://doi.org/10.1177/0956797614524255" target="_blank" rel="noopener">논문</a> (2025년 재분석에서 일부 결론에 이견이 제기됨)</li>
+              <li>Hegre, H. et al. (2019). ViEWS: A political violence early-warning system. <i>Journal of Peace Research</i>, 56(2), 155–174. <a href="https://doi.org/10.1177/0022343319823860" target="_blank" rel="noopener">논문 (공개)</a></li>
+            </ul>
+          </details>
+        </div>
+      </article>
+    </div>
+  </section>
+  <footer class="wr-site-foot wr-pad">
+    <p>이 사이트는 쿠키를 사용하는 Microsoft Clarity로 방문 통계(클릭, 스크롤 등)를 수집해 화면 개선에 활용합니다. 입력 내용은 수집하지 않도록 가려집니다. <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener">Microsoft 개인정보처리방침</a></p>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script type="application/json" id="wr-data">{"indicators":[{"id":"m1","category":"군사","name":"북한 미사일 발사 (2026년 누적)","value":"15회 이상","status":"주의","weight":1,"note":"10월 3일 중거리급 발사가 올해 15번째. 이후 10/12·10/14 추가 발사 보도(미확인)","source_name":"서울신문","source_url":"https://m.seoul.co.kr/news/politics/diplomacy/2026/10/03/20261003500020","checked":"2026-10-28T01:00:55Z","tier":"C","crit_normal":"최근 30일 탄도미사일 발사 없음","crit_watch":"탄도·순항미사일 발사","crit_alert":"핵실험 또는 남측 영역에 낙하"},{"id":"m2","category":"군사","name":"군사분계선(MDL) 침범","value":"올해 50회","status":"주의","weight":1,"note":"국경 요새화 작업 중 침범, 한국군 경고방송·경고사격으로 대응. 작년 17회","source_name":"ABC News","source_url":"https://www.abc.net.au/news/2026-10-23/tensions-rise-on-korea-border/107299192","checked":"2026-10-27T12:00:00Z","tier":"C","crit_normal":"최근 30일 침범 없음","crit_watch":"침범과 경고사격","crit_alert":"침범 중 교전"},{"id":"m3","category":"군사","name":"접경지역 포병 배치","value":"자주포·해안포 노출 배치","status":"주의","weight":2,"note":"122mm 자주포, 개풍군 해안 곡사포 3문. 합참은 '새로운 능력은 아님'으로 평가","source_name":"Stars and Stripes","source_url":"https://www.stripes.com/theaters/asia_pacific/2026-10-27/north-korea-howitzers-dmz-positions-23274575.html","checked":"2026-10-27T12:00:00Z","tier":"B","crit_normal":"특이 배치 보도 없음","crit_watch":"포병·병력의 노출 배치, 사격진지 진입","crit_alert":"대규모 전진 배치 또는 실제 사격"},{"id":"m4","category":"군사","name":"DMZ 내 피해 사건","value":"지뢰 폭발 1건, 3명 부상","status":"주의","weight":2,"note":"9월 21일 서부전선. 합참·유엔사 '북한 지뢰 가능성 높음', 북한은 '조작' 주장. 교전은 없음","source_name":"NK News","source_url":"https://www.nknews.org/2026/09/north-korean-mine-likely-caused-dmz-blast-that-injured-3-troops-rok/","checked":"2026-10-27T12:00:00Z","tier":"B","crit_normal":"최근 30일 피해 사건 없음","crit_watch":"지뢰·총격 등 피해 사건 (교전 없음)","crit_alert":"교전으로 사상자 발생"},{"id":"m5","category":"군사","name":"북한 병력 동원·예비군 소집","value":"보도 없음","status":"정상","weight":4,"note":"대규모 동원, 전시 체제 전환 징후는 보도되지 않음","source_name":"Nikkei Asia","source_url":"https://asia.nikkei.com/spotlight/north-korea-tensions/north-korea-places-self-propelled-guns-near-dmz","checked":"2026-10-28T03:59:48Z","tier":"A","crit_normal":"동원 보도 없음","crit_watch":"부분 동원, 예비군(교도대·노농적위군) 소집 보도","crit_alert":"전면 동원 또는 전시상태 선포"},{"id":"m6","category":"군사","name":"한미 정보감시태세(워치콘)","value":"상향 보도 없음","status":"정상","note":"평시 4단계에서 3·2단계로 올리면 보통 보도됨. 최근 상향 보도는 찾지 못함","source_name":"한국경제 (워치콘 체계 설명)","source_url":"https://www.hankyung.com/amp/2015082181727","checked":"2026-10-28T03:59:48Z","tier":"B","weight":2,"crit_normal":"평시 수준, 상향 보도 없음","crit_watch":"3단계 상향 보도","crit_alert":"2단계 이상 상향 보도"},{"id":"d1","category":"외교·대피","name":"미 국무부 한국 여행경보","value":"1단계 (일반 주의)","status":"정상","weight":4,"note":"4단계 중 가장 낮음. 상향 시 강한 경고 신호","source_name":"travel.state.gov","source_url":"https://travel.state.gov/en/international-travel/travel-advisories/south-korea.html","checked":"2026-10-28T03:59:48Z","tier":"A","crit_normal":"1단계 (일반 주의)","crit_watch":"2단계 (주의 강화)","crit_alert":"3단계 (여행 재고) 이상"},{"id":"d2","category":"외교·대피","name":"주한미군 비전투원 대피(NEO)","value":"발령 없음","status":"정상","weight":4,"note":"정전 이후 실제 발령된 적 없음. 정기 훈련만 시행","source_name":"RSO Korea","source_url":"https://www.rsokorea.org/noncombatantevacuation.html","checked":"2026-10-28T03:59:48Z","tier":"A","crit_normal":"발령 없음","crit_watch":"대피 등록·연락망 점검 등 비정기 공지","crit_alert":"비전투원 대피(NEO) 발령"},{"id":"d3","category":"외교·대피","name":"일본 외무성 한국 위험정보","value":"발령 보도 없음","status":"정상","weight":2,"note":"한국 대상 위험정보(여행 자제 등) 발령 보도 없음","source_name":"일본 외무성 해외안전","source_url":"https://www.anzen.mofa.go.jp/","checked":"2026-10-27T12:00:00Z","tier":"B","crit_normal":"위험정보 없음","crit_watch":"주의 환기(스폿 정보)","crit_alert":"위험정보 레벨 2 (불요불급한 도항 중지) 이상"},{"id":"d4","category":"외교·대피","name":"남북 대화 채널","value":"한국 제안, 북한 거부","status":"주의","weight":1,"note":"한국 군사회담 제안(10/23). 김여정 대화 거부, 북한 유엔 안보리에 서한(10/25)","source_name":"US News","source_url":"https://www.usnews.com/news/world/articles/2026-10-23/south-korea-proposes-military-talks-with-north-korea-to-calm-rising-border-tensions","checked":"2026-10-27T12:00:00Z","tier":"C","crit_normal":"대화·통신선 정상","crit_watch":"대화 거부 또는 통신선 단절","crit_alert":"정전협정 무효화 선언 등"},{"id":"d5","category":"외교·대피","name":"각국 대사관 철수·인원 감축","value":"보도 없음","status":"정상","weight":4,"note":"주한 외국 대사관의 철수 권고나 직원 가족 출국 명령 보도 없음","source_name":"travel.state.gov","source_url":"https://travel.state.gov/en/international-travel/travel-advisories/south-korea.html","checked":"2026-10-28T03:59:48Z","tier":"A","crit_normal":"철수 관련 보도 없음","crit_watch":"한 나라 이상이 직원 가족의 자발적 출국을 허용","crit_alert":"한 나라 이상이 직원·가족 출국을 명령"},{"id":"f1","category":"시장","name":"원/달러 환율","value":"1,326원","status":"정상","weight":1,"note":"1개월간 원화 2.4% 강세. 지정학 불안 시 보통 원화 약세","source_name":"Trading Economics","source_url":"https://tradingeconomics.com/south-korea/currency","checked":"2026-10-27T12:00:00Z","tier":"C","crit_normal":"북한 요인 급변 없음","crit_watch":"북한 사건 직후 원화가 하루 1% 이상 약세","crit_alert":"북한 요인으로 원화 급락이 여러 날 이어짐"},{"id":"f2","category":"시장","name":"KOSPI","value":"5,638 (+3.1%)","status":"정상","weight":1,"note":"최근 급등락은 AI 관련. 북한 리스크와 연관된 보도 없음","source_name":"KED Global","source_url":"https://kedglobal.com/korean-stock-market/newsView/ked202610270002","checked":"2026-10-27T12:00:00Z","tier":"C","crit_normal":"북한 요인 급변 없음","crit_watch":"북한 사건 직후 하루 2% 이상 하락","crit_alert":"북한 요인으로 급락이 여러 날 이어짐"},{"id":"f3","category":"시장","name":"한국 CDS 프리미엄 (5년물)","value":"확인 불가","status":"확인 불가","weight":1,"note":"공개 보도에서 최신 수치를 찾지 못해 점수에서 제외","source_name":"국제금융센터","source_url":"https://www.kcif.or.kr/","checked":"2026-10-27T12:00:00Z","tier":"C","crit_normal":"북한 요인 급변 없음","crit_watch":"북한 사건 직후 급등","crit_alert":"급등이 여러 날 이어짐"}],"forecasts":[{"id":"p1","name":"폴리마켓: 2026년 내 북한의 남침","value":3,"as_of":"2026-09-09","note":"남한 영토 장악 목적의 공세만 해당. 국지 교전은 제외","source_name":"PredictMarketCap (폴리마켓 가격 집계)","source_url":""},{"id":"p2","name":"SIGMA: 2027년 6월까지 무력 충돌","value":13,"as_of":"2026-06-15","note":"국지적 무력 행동 포함. '충돌 없음 87%'에서 환산","source_name":"SIGMA Futures Group","source_url":"https://sigmafutures.group/forecasts/north-korea-south-korea/"}],"events":[{"id":"e10","date":"2026-10-27","title":"개풍군 해안에 남쪽을 향한 곡사포 3문 포착","severity":"주의","source_name":"Stars and Stripes","source_url":"https://www.stripes.com/theaters/asia_pacific/2026-10-27/north-korea-howitzers-dmz-positions-23274575.html"},{"id":"e9","date":"2026-10-26","title":"접경지역 122mm 자주포 노출 배치 확인","severity":"주의","source_name":"Japan Times","source_url":"https://www.japantimes.co.jp/news/2026/10/26/asia-pacific/north-korea-seoul-letters-un/"},{"id":"e8","date":"2026-10-25","title":"북한, 유엔 안보리에 '지뢰 사건은 조작' 서한","severity":"정보","source_name":"UPI","source_url":"https://www.upi.com/Top_News/World-News/2026/10/26/North-Korea-DMZ-mine-blast-UNSC-letter/3891792997390/"},{"id":"e7","date":"2026-10-23","title":"한국, 우발 충돌 방지 위한 군사회담 제안","severity":"정보","source_name":"US News","source_url":"https://www.usnews.com/news/world/articles/2026-10-23/south-korea-proposes-military-talks-with-north-korea-to-calm-rising-border-tensions"},{"id":"e6","date":"2026-10-21","title":"김여정 '화력부대 사격진지 진입', 국경부대에 '단호한 행동' 지시","severity":"주의","source_name":"CNN","source_url":"https://www.cnn.com/2026/10/21/asia/north-korea-tension-south-korea-troops-intl"},{"id":"e5","date":"2026-10-03","title":"동해상 탄도미사일 발사, 700km 이상 비행 (올해 15번째)","severity":"주의","source_name":"서울신문","source_url":"https://m.seoul.co.kr/news/politics/diplomacy/2026/10/03/20261003500020"},{"id":"e4","date":"2026-09-28","title":"합참 '북한 지뢰일 가능성 높음' 발표","severity":"정보","source_name":"NK News","source_url":"https://www.nknews.org/2026/09/north-korean-mine-likely-caused-dmz-blast-that-injured-3-troops-rok/"},{"id":"e3","date":"2026-09-21","title":"서부전선 DMZ 지뢰 폭발, 한국군 3명 부상","severity":"위험","source_name":"Japan Times","source_url":"https://www.japantimes.co.jp/news/2026/09/21/asia-pacific/south-korean-soldiers-dmz-blast/"},{"id":"e2","date":"2026-08-17","title":"북한군 군사분계선 침범, 한국군 경고사격","severity":"주의","source_name":"UPI","source_url":"https://www.upi.com/amp/Top_News/World-News/2026/08/17/military-demarcation-line-border-security/4551787010752/"}],"shop":[{"id":"buy","url":"https://smartstore.naver.com/sodangan/products/13835938283?nl-query=%EC%86%8C%EB%8B%B9%EC%95%88&nl-au=eb5556ed6a7948cc9428760064a75c8e&NaPm=ci%3Deb5556ed6a7948cc9428760064a75c8e%7Cct%3Dmvrin3u0%7Ctr%3Dnslsl%7Csn%3D12652104%7Chk%3Deefeccb7a69b7c73c51faa23f4ba1a5be498a6f0"}]}</script>
+<script>
+  (function () {
+    const RAW = JSON.parse(document.getElementById('wr-data').textContent);
+    const calcs = {}, draws = [], ons = [];
+    const data = (id) => {
+      if (RAW[id]) return {status: 'ok', data: RAW[id]};
+      const c = calcs[id];
+      if (c) { if (!c.cache) c.cache = c.fn(...c.inputs.map((i) => data(i).data)); return {status: 'ok', data: c.cache}; }
+      return {status: 'missing', data: []};
+    };
+    const run = (name, f) => document.querySelectorAll('[data-draw="' + name + '"]').forEach((el) => {
+      if (el.closest('[hidden]')) return;
+      try {
+        if (typeof f === 'function') f(el);
+        else { if (!el._wrMade) el._wrMade = f.mount(el); if (f.update) f.update(el, el._wrMade); }
+      } catch (e) { console.error(e); }
+    });
+    window.dash = {
+      data,
+      calc: (id, o) => { calcs[id] = o; },
+      draw: (name, f) => { draws.push([name, f]); },
+      onData: (f) => { ons.push(f); },
+      setLink: (id) => { try { history.replaceState(null, '', '#' + id); } catch (e) {} },
+      params: () => ({}),
+    };
+    window.__wrRedraw = () => { ons.forEach((f) => { try { f(); } catch (e) { console.error(e); } }); draws.forEach(([n, f]) => run(n, f)); };
+  })();
+</script>
+<script>
+  dash.calc('risk', {
+    inputs: ['indicators'],
+    title: '종합 위험 점수와 단계',
+    description: '단계는 등급별 규칙(A 위험 2개 이상 → 위험, A 위험 1개·A 주의 이상 2개·B 위험 2개 → 경계, B 주의 이상 1개·C 주의 이상 2개 → 긴장)으로 정하고, 점수는 정상 0·주의 0.5·위험 1의 가중 평균을 그 단계 범위에 맞춘 값.',
+    fn: (indicators) => {
+      const level = {'정상': 0, '주의': 0.5, '위험': 1};
+      const known = indicators.filter((r) => r.status in level && Number(r.weight) > 0);
+      const w = known.reduce((s, r) => s + Number(r.weight), 0);
+      const raw = w ? Math.round(known.reduce((s, r) => s + Number(r.weight) * level[r.status], 0) / w * 100) : null;
+      const count = (tier, sts) => indicators.filter((r) => r.tier === tier && sts.includes(r.status)).length;
+      const up = ['주의', '위험'];
+      let band = '평시';
+      if (count('A', ['위험']) >= 2) band = '위험';
+      else if (count('A', ['위험']) >= 1 || count('A', up) >= 2 || count('B', ['위험']) >= 2) band = '경계';
+      else if (count('B', up) >= 1 || count('C', up) >= 2) band = '긴장';
+      const range = {'평시': [0, 14], '긴장': [15, 34], '경계': [35, 59], '위험': [60, 100]}[band];
+      const score = raw == null ? null : Math.min(Math.max(raw, range[0]), range[1]);
+      const last = indicators.map((r) => r.checked).filter(Boolean).sort().pop();
+      const checked = last ? new Date(new Date(last).getTime() + 9 * 3600e3).toISOString().slice(0, 16).replace('T', ' ') + ' KST' : null;
+      return [{score, band, raw, known: known.length, total: indicators.length, checked}];
+    },
+  });
+  dash.calc('risk_by_cat', {
+    inputs: ['indicators'],
+    title: '분야별 위험 점수',
+    description: '종합 점수와 같은 방식으로 분야(군사, 외교·대피, 시장)마다 계산한 점수.',
+    fn: (indicators) => {
+      const level = {'정상': 0, '주의': 0.5, '위험': 1};
+      const cats = [...new Set(indicators.map((r) => r.category))];
+      return cats.map((category) => {
+        const known = indicators.filter((r) => r.category === category && r.status in level && Number(r.weight) > 0);
+        const w = known.reduce((s, r) => s + Number(r.weight), 0);
+        const score = w ? Math.round(known.reduce((s, r) => s + Number(r.weight) * level[r.status], 0) / w * 100) : null;
+        return {category, score, raised: known.filter((r) => r.status !== '정상').length, known: known.length};
+      });
+    },
+  });
+
+  const COLORS = {ok: '#3ee6c1', warn: '#ffc857', bad: '#ff5470', none: '#6b7f99', cyan: '#4fd8ff'};
+  const statusKey = (s) => s === '정상' ? 'ok' : s === '주의' ? 'warn' : s === '위험' ? 'bad' : s === '정보' ? 'info' : 'none';
+  const scoreKey = (v) => v == null ? 'none' : v >= 60 ? 'bad' : v >= 15 ? 'warn' : 'ok';
+  const bandKey = (b) => b === '평시' ? 'ok' : b === '긴장' || b === '경계' ? 'warn' : b === '위험' ? 'bad' : 'none';
+  const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const riskRow = () => { const g = dash.data('risk'); return g.status === 'ok' && g.data.length ? g.data[0] : null; };
+  const whereVal = (el, key) => new URLSearchParams(el.dataset.where || '').get(key);
+  const mk = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+  const mark = (n, source, field, where) => { n.dataset.source = source; n.dataset.field = field; n.dataset.where = where; return n; };
+  const link = (text, url) => {
+    if (typeof url === 'string' && /^https:\/\//.test(url)) { const a = mk('a', null, text ?? ''); a.href = url; a.target = '_blank'; a.rel = 'noopener'; return a; }
+    return mk('span', null, text ?? '');
+  };
+
+  document.querySelectorAll('.wr-share-btn').forEach((btn) => btn.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') !== 'true';
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.querySelectorAll('.wr-share').forEach((p) => { p.hidden = !open; });
+  }));
+  const showMsg = (key) => document.querySelectorAll('.wr-share-msg').forEach((m) => { m.hidden = m.dataset.msg !== key; });
+  document.querySelectorAll('.wr-sh[data-copy]').forEach((b) => b.addEventListener('click', () => {
+    const input = document.getElementById('share-url');
+    const url = input ? input.value : '';
+    const fail = () => { if (input) { input.focus(); input.select(); } showMsg('fail'); };
+    try {
+      navigator.clipboard.writeText(url).then(() => showMsg(b.dataset.copy), fail);
+    } catch (e) { fail(); }
+  }));
+  document.querySelectorAll('.wr-share-url').forEach((i) => i.addEventListener('focus', () => i.select()));
+
+  document.querySelectorAll('.wr-ad-toggle').forEach((b) => b.addEventListener('click', () => {
+    const note = document.getElementById(b.getAttribute('aria-controls'));
+    if (!note) return;
+    note.hidden = !note.hidden;
+    b.setAttribute('aria-expanded', note.hidden ? 'false' : 'true');
+  }));
+
+  document.querySelectorAll('.wr-down').forEach((b) => b.addEventListener('click', () => {
+    const id = b.dataset.target || 'analysis';
+    const t = document.getElementById(id);
+    if (t) { t.scrollIntoView({behavior: reduced() ? 'auto' : 'smooth'}); dash.setLink(id); }
+  }));
+
+  dash.draw('net', {
+    mount: (el) => {
+      const c = document.createElement('canvas');
+      el.appendChild(c);
+      const st = {c, ctx: c.getContext('2d'), pts: [], raf: 0, w: 0, h: 0, still: reduced()};
+      st.size = () => {
+        const dpr = Math.min(2, window.devicePixelRatio || 1);
+        st.w = el.clientWidth; st.h = el.clientHeight;
+        c.width = Math.max(1, st.w * dpr); c.height = Math.max(1, st.h * dpr);
+        c.style.width = st.w + 'px'; c.style.height = st.h + 'px';
+        st.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const n = Math.max(20, Math.min(90, Math.round(st.w * st.h / 12000)));
+        while (st.pts.length < n) st.pts.push({x: Math.random() * st.w, y: Math.random() * st.h, vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3});
+        st.pts.length = n;
+      };
+      st.frame = () => {
+        const {ctx, pts, w, h} = st;
+        if (!document.hidden) {
+          ctx.clearRect(0, 0, w, h);
+          for (const p of pts) {
+            if (!st.still) { p.x += p.vx; p.y += p.vy; }
+            if (p.x < 0) p.x += w; if (p.x > w) p.x -= w; if (p.y < 0) p.y += h; if (p.y > h) p.y -= h;
+          }
+          const R = 140;
+          for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
+            const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y, d = Math.hypot(dx, dy);
+            if (d < R) { ctx.strokeStyle = `rgba(79,216,255,${(1 - d / R) * 0.32})`; ctx.lineWidth = 0.7; ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y); ctx.stroke(); }
+          }
+          for (const p of pts) { ctx.fillStyle = 'rgba(150,232,255,0.85)'; ctx.beginPath(); ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2); ctx.fill(); }
+        }
+        if (!st.still) st.raf = requestAnimationFrame(st.frame);
+      };
+      st.size(); st.frame();
+      return st;
+    },
+    update: (el, st) => { st.size(); if (st.still) st.frame(); },
+    unmount: (el, st) => cancelAnimationFrame(st.raf),
+  });
+
+  dash.draw('score', (el) => { const r = riskRow(); el.textContent = r && r.score != null ? String(r.score) : '—'; });
+  dash.draw('band', (el) => {
+    const r = riskRow();
+    el.textContent = r && r.band ? r.band : '—';
+    el.style.color = r && r.band ? COLORS[bandKey(r.band)] : '';
+  });
+  dash.draw('checked', (el) => { const r = riskRow(); el.textContent = r && r.checked ? r.checked : '—'; });
+
+  dash.draw('ring', (el) => {
+    el.replaceChildren();
+    const r = riskRow();
+    const S = 400, C = S / 2, Ro = 186, Rt = 150;
+    const a0 = -0.75 * Math.PI, span = 1.5 * Math.PI;
+    const ang = (v) => a0 + span * v / 100;
+    const svg = d3.select(el).append('svg').attr('viewBox', `0 0 ${S} ${S}`).attr('role', 'img')
+      .attr('aria-label', r && r.score != null ? `위험 점수 ${r.score} / 100` : '위험 점수');
+    const defs = svg.append('defs');
+    const f = defs.append('filter').attr('id', 'wr-glow').attr('x', '-50%').attr('y', '-50%').attr('width', '200%').attr('height', '200%');
+    f.append('feGaussianBlur').attr('stdDeviation', 6).attr('result', 'b');
+    const m = f.append('feMerge'); m.append('feMergeNode').attr('in', 'b'); m.append('feMergeNode').attr('in', 'SourceGraphic');
+    const g = svg.append('g').attr('transform', `translate(${C},${C})`);
+    g.append('circle').attr('r', 112).attr('fill', 'none').attr('stroke', 'rgba(79,216,255,0.22)').attr('stroke-dasharray', '2 6');
+    g.append('circle').attr('r', 60).attr('fill', 'none').attr('stroke', 'rgba(79,216,255,0.12)');
+    [[-128, 0, -64, 0], [64, 0, 128, 0], [0, -128, 0, -64], [0, 64, 0, 128]].forEach(([x1, y1, x2, y2]) =>
+      g.append('line').attr('x1', x1).attr('y1', y1).attr('x2', x2).attr('y2', y2).attr('stroke', 'rgba(79,216,255,0.18)'));
+    for (let v = 0; v <= 100; v += 2.5) {
+      const a = ang(v), major = v % 10 === 0;
+      g.append('line').attr('x1', Math.sin(a) * (Ro - (major ? 10 : 5))).attr('y1', -Math.cos(a) * (Ro - (major ? 10 : 5)))
+        .attr('x2', Math.sin(a) * Ro).attr('y2', -Math.cos(a) * Ro)
+        .attr('stroke', 'rgba(79,216,255,' + (major ? 0.55 : 0.25) + ')').attr('stroke-width', major ? 1.5 : 1);
+    }
+    const bands = [[0, 15, 'ok'], [15, 35, 'warn'], [35, 60, 'warn'], [60, 100, 'bad']];
+    const arc = d3.arc().innerRadius(Rt - 3).outerRadius(Rt + 3).cornerRadius(3);
+    bands.forEach(([s, e, k], i) => g.append('path').attr('d', arc({startAngle: ang(s) + 0.012, endAngle: ang(e) - 0.012}))
+      .attr('fill', COLORS[k]).attr('fill-opacity', i === 2 ? 0.32 : 0.2));
+    [0, 15, 35, 60, 100].forEach((v) => {
+      if (r && r.score != null && v !== 0 && v !== 100 && Math.abs(v - r.score) < 6) return;
+      const a = ang(v), rr = Ro - 26;
+      g.append('text').attr('x', Math.sin(a) * rr).attr('y', -Math.cos(a) * rr + 4).attr('text-anchor', 'middle')
+        .attr('fill', '#8fa9c4').style('font-size', '12px').style('font-family', 'ui-monospace, Menlo, monospace').text(v);
+    });
+    if (!r || r.score == null) return;
+    const col = COLORS[scoreKey(r.score)];
+    const valArc = d3.arc().innerRadius(Rt - 9).outerRadius(Rt + 9).cornerRadius(9).startAngle(a0);
+    const path = g.append('path').attr('fill', col).attr('filter', 'url(#wr-glow)');
+    const dot = g.append('circle').attr('r', 7).attr('fill', '#e6f4ff').attr('filter', 'url(#wr-glow)');
+    const setTo = (v) => { path.attr('d', valArc({endAngle: ang(Math.max(v, 1))})); const a = ang(v); dot.attr('cx', Math.sin(a) * Rt).attr('cy', -Math.cos(a) * Rt); };
+    if (!el._wrAnimated && !reduced()) {
+      el._wrAnimated = true;
+      svg.transition().duration(1400).ease(d3.easeCubicOut).tween('v', () => (t) => setTo(r.score * t));
+    } else setTo(r.score);
+  });
+
+  dash.calc('tripwires', {
+    inputs: ['indicators'],
+    title: '켜진 전면전 직전 신호',
+    description: '주한미군 가족 대피, 미국 여행경보, 대사관 철수, 북한 동원(A등급 4개)과 정보감시태세(워치콘) 중 상태가 주의 또는 위험인 수.',
+    fn: (indicators) => {
+      const ids = ['d2', 'd1', 'd5', 'm5', 'm6'];
+      const rows = indicators.filter((r) => ids.includes(r.id));
+      return [{lit: rows.filter((r) => r.status === '주의' || r.status === '위험').length, known: rows.length}];
+    },
+  });
+  const indById = (el) => { const g = dash.data('indicators'); return g.status === 'ok' ? g.data.find((d) => d.id === whereVal(el, 'id')) : null; };
+  dash.draw('led', (el) => {
+    const r = indById(el);
+    el.textContent = r ? r.status : '—';
+    el.style.color = r ? COLORS[statusKey(r.status)] : '';
+  });
+  dash.draw('sigval', (el) => { const r = indById(el); el.textContent = r ? r.value : '—'; });
+  dash.draw('tripcount', (el) => {
+    const g = dash.data('tripwires');
+    const r = g.status === 'ok' && g.data.length ? g.data[0] : null;
+    el.textContent = r ? String(r.lit) : '—';
+    el.style.color = r && r.lit > 0 ? COLORS.bad : '';
+  });
+
+  dash.draw('catbars', (el) => {
+    el.replaceChildren();
+    const g = dash.data('risk_by_cat');
+    if (g.status !== 'ok') { el.textContent = '—'; return; }
+    const tip = mk('div', 'wr-tip'); tip.hidden = true;
+    g.data.forEach((d) => {
+      const row = mk('div', 'wr-cat-row');
+      const segs = mk('div', 'wr-segs');
+      const lit = Math.round((d.score ?? 0) / 5), col = COLORS[scoreKey(d.score)];
+      for (let i = 0; i < 20; i++) {
+        const s = mk('div', 'wr-seg');
+        if (i < lit) { s.style.background = col; s.style.boxShadow = `0 0 6px ${col}`; }
+        segs.appendChild(s);
+      }
+      const label = mk('span', null, d.category);
+      const target = {'군사': 'cat-military', '외교·대피': 'cat-diplomacy', '시장': 'cat-market'}[d.category];
+      if (target) {
+        label.appendChild(mk('span', 'wr-cat-go', '›'));
+        row.dataset.target = target;
+        row.tabIndex = 0;
+        row.setAttribute('role', 'link');
+        row.setAttribute('aria-label', d.category + ' 근거 보기');
+        const go = () => { const el = document.getElementById(target); if (el) { el.scrollIntoView({behavior: reduced() ? 'auto' : 'smooth'}); dash.setLink(target); } };
+        row.addEventListener('click', go);
+        row.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); go(); } });
+      }
+      row.append(label, segs, mk('span', 'wr-cat-val', d.score == null ? '—' : String(d.score)));
+      row.addEventListener('pointermove', (ev) => {
+        tip.textContent = `${d.category} · 점수 ${d.score ?? '—'} · 주의 이상 ${d.raised}/${d.known}개`;
+        tip.hidden = false;
+        const box = el.getBoundingClientRect();
+        tip.style.left = Math.min(Math.max(0, ev.clientX - box.left + 10), Math.max(0, box.width - tip.offsetWidth)) + 'px';
+        tip.style.top = (ev.clientY - box.top + 14) + 'px';
+      });
+      row.addEventListener('pointerleave', () => { tip.hidden = true; });
+      el.appendChild(row);
+    });
+    el.appendChild(tip);
+  });
+
+  dash.draw('catscore', (el) => {
+    const g = dash.data('risk_by_cat');
+    const row = g.status === 'ok' ? g.data.find((d) => d.category === whereVal(el, 'category')) : null;
+    el.textContent = row && row.score != null ? String(row.score) : '—';
+  });
+
+  dash.draw('indlist', (ul) => {
+    ul.replaceChildren();
+    const g = dash.data('indicators');
+    if (g.status !== 'ok') return;
+    g.data.filter((r) => r.category === ul.dataset.cat)
+      .sort((a, b) => Number(b.weight) - Number(a.weight))
+      .forEach((r) => {
+        const w = 'id=' + encodeURIComponent(r.id);
+        const k = statusKey(r.status);
+        const li = mk('li', 'is-' + k);
+        const top = mk('div', 'wr-ind-top');
+        top.append(
+          mark(mk('span', 'wr-ind-name', r.name), 'indicators', 'name', w),
+          mark(mk('span', 'wr-ind-val', r.value), 'indicators', 'value', w),
+          mark(mk('span', 'wr-chip c-' + k, r.status), 'indicators', 'status', w),
+        );
+        const meta = mk('div', 'wr-ind-meta');
+        const tier = mk('span', null);
+        tier.append(mark(mk('span', 'wr-tier', r.tier || '—'), 'indicators', 'tier', w), document.createTextNode(' 등급'));
+        const wt = mk('span', null, '가중치 ');
+        wt.appendChild(mark(mk('span', null, String(r.weight)), 'indicators', 'weight', w));
+        const src = mk('span', null, '출처 ');
+        src.appendChild(mark(link(r.source_name, r.source_url), 'indicators', 'source_name', w));
+        meta.append(tier, wt, src);
+        li.append(top, mark(mk('div', 'wr-ind-note', r.note), 'indicators', 'note', w), meta);
+        if (r.crit_normal || r.crit_watch || r.crit_alert) {
+          const det = mk('details', 'wr-crit');
+          det.appendChild(mk('summary', null, '판단 기준'));
+          const dl = mk('dl');
+          [['정상', 'crit_normal', 'ok'], ['주의', 'crit_watch', 'warn'], ['위험', 'crit_alert', 'bad']].forEach(([label, f, key]) => {
+            dl.append(mk('dt', 'c-' + key, label), mark(mk('dd', null, r[f] || ''), 'indicators', f, w));
+          });
+          det.appendChild(dl);
+          li.appendChild(det);
+        }
+        ul.appendChild(li);
+      });
+  });
+
+  dash.draw('fclist', (ul) => {
+    ul.replaceChildren();
+    const g = dash.data('forecasts');
+    if (g.status !== 'ok') return;
+    g.data.forEach((r) => {
+      const w = 'id=' + encodeURIComponent(r.id);
+      const li = mk('li', 'is-none');
+      li.style.borderLeftColor = COLORS.cyan;
+      const top = mk('div', 'wr-ind-top');
+      const val = mk('span', 'wr-ind-val');
+      val.append(mark(mk('span', null, String(r.value)), 'forecasts', 'value', w), document.createTextNode('%'));
+      top.append(mark(mk('span', 'wr-ind-name', r.name), 'forecasts', 'name', w), val);
+      const meta = mk('div', 'wr-ind-meta');
+      const d = mk('span', null, '기준일 '); d.appendChild(mark(mk('span', null, r.as_of), 'forecasts', 'as_of', w));
+      const src = mk('span', null, '출처 '); src.appendChild(mark(link(r.source_name, r.source_url), 'forecasts', 'source_name', w));
+      meta.append(d, src);
+      li.append(top, mark(mk('div', 'wr-ind-note', r.note), 'forecasts', 'note', w), meta);
+      ul.appendChild(li);
+    });
+  });
+
+  dash.draw('events', (ol) => {
+    ol.replaceChildren();
+    const g = dash.data('events');
+    if (g.status !== 'ok') return;
+    [...g.data].sort((a, b) => String(b.date).localeCompare(String(a.date))).forEach((r) => {
+      const w = 'id=' + encodeURIComponent(r.id);
+      const k = statusKey(r.severity);
+      const li = mk('li', 'c-' + k);
+      const top = mk('div', 'wr-tl-date');
+      top.append(mark(mk('span', null, r.date), 'events', 'date', w), mark(mk('span', 'wr-chip c-' + k, r.severity), 'events', 'severity', w));
+      const src = mk('div', 'wr-tl-src');
+      src.appendChild(mark(link(r.source_name, r.source_url), 'events', 'source_name', w));
+      li.append(top, mark(mk('div', 'wr-tl-title', r.title), 'events', 'title', w), src);
+      ol.appendChild(li);
+    });
+  });
+
+  const buyUrl = () => {
+    const g = dash.data('shop');
+    if (g.status !== 'ok' || !Array.isArray(g.data)) return null;
+    const r = g.data.find((d) => typeof d.url === 'string' && /^https:\/\//.test(d.url.trim()));
+    return r ? r.url.trim() : null;
+  };
+  dash.onData(() => {
+    const has = !!buyUrl();
+    document.querySelectorAll('.wr-kit-ad').forEach((n) => { n.hidden = !has; });
+  });
+  dash.draw('kitbuy', (a) => {
+    const url = buyUrl();
+    a.textContent = '재난 파우치 구매하러 가기';
+    if (url) a.href = url; else a.removeAttribute('href');
+  });
+
+  dash.onData(() => {
+    const g = dash.data('risk');
+    const band = g.status === 'ok' && g.data.length ? g.data[0].band : null;
+    document.querySelectorAll('.wr-stage tr[data-stage]').forEach((tr) => tr.classList.toggle('is-current', tr.dataset.stage === band));
+  });
+
+  const named = document.getElementById(location.hash.slice(1));
+  if (named) named.scrollIntoView();
+</script>
+<script>
+  window.__wrRedraw();
+  let wrW = window.innerWidth;
+  window.addEventListener('resize', () => { if (window.innerWidth !== wrW) { wrW = window.innerWidth; window.__wrRedraw(); } });
+</script>
+</body>
+</html>
